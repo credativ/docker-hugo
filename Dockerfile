@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-# Install pygments (for syntax highlighting) 
+# Install pygments (for syntax highlighting)
 RUN apt-get -qq update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments git ca-certificates asciidoc curl \
 	&& rm -rf /var/lib/apt/lists/*
@@ -15,6 +15,15 @@ RUN curl -sL -o /tmp/hugo.deb \
     dpkg -i /tmp/hugo.deb && \
     rm /tmp/hugo.deb && \
     mkdir /usr/share/blog
+
+# Download and install minify
+ENV MINIFY_VERSION 2.3.1
+ENV MINIFY_BINARY minify_${MINIFY_VERSION}_linux_amd64.tar.gz
+
+RUN curl -sL -o /tmp/minify.tar.gz \
+    https://github.com/tdewolff/minify/releases/download/v${MINIFY_VERSION}/${MINIFY_BINARY} && \
+    tar xf /tmp/minify.tar.gz -C /usr/local/bin && \
+    rm /tmp/minify.tar.gz
 
 WORKDIR /usr/share/blog
 
