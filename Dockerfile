@@ -25,6 +25,10 @@ RUN curl -sL -o /tmp/minify.tar.gz \
     tar xf /tmp/minify.tar.gz -C /usr/local/bin && \
     rm /tmp/minify.tar.gz
 
+# Install tools to build docs
+RUN apt-get install -y --no-install-recommends pandoc make
+RUN apt-get install -y sphinx-common python-recommonmark python-sphinx-rtd-theme
+
 WORKDIR /usr/share/blog
 
 # Expose default hugo port
