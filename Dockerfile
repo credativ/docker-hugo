@@ -1,8 +1,8 @@
-FROM debian:jessie
+FROM debian:stretch
 
 # Install pygments (for syntax highlighting)
 RUN apt-get -qq update \
-	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments git ca-certificates asciidoc curl \
+	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments git ca-certificates asciidoc curl pandoc make sphinx-common python-recommonmark python-sphinx-rtd-theme \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Download and install hugo
@@ -24,10 +24,6 @@ RUN curl -sL -o /tmp/minify.tar.gz \
     https://github.com/tdewolff/minify/releases/download/v${MINIFY_VERSION}/${MINIFY_BINARY} && \
     tar xf /tmp/minify.tar.gz -C /usr/local/bin && \
     rm /tmp/minify.tar.gz
-
-# Install tools to build docs
-RUN apt-get install -y --no-install-recommends pandoc make
-RUN apt-get install -y sphinx-common python-recommonmark python-sphinx-rtd-theme
 
 WORKDIR /usr/share/blog
 
