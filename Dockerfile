@@ -2,7 +2,10 @@ FROM debian:stretch
 
 # Install pygments (for syntax highlighting)
 RUN apt-get -qq update \
-	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments git ca-certificates asciidoc curl pandoc make sphinx-common python3-sphinx python-recommonmark python-sphinx-rtd-theme \
+	&& DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends python-pygments git ca-certificates asciidoc curl
+
+# Install tools to build docs
+RUN DEBIAN_FRONTEND=noninteractive apt-get -qq install -y pandoc make sphinx-common python3-sphinx python-recommonmark python-sphinx-rtd-theme \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Download and install hugo
